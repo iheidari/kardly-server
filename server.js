@@ -1,3 +1,7 @@
+// Config Environment variables
+const { port } = require("./config/environments");
+
+// Config express
 const express = require("express");
 const bodyParser = require("body-parser");
 
@@ -19,7 +23,8 @@ mongoose.Promise = global.Promise;
 // Connecting to the database
 mongoose
   .connect(dbConfig.url, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true
   })
   .then(() => {
     console.log("Successfully connected to the database");
@@ -32,6 +37,6 @@ mongoose
 require("./app/kard/route")(app);
 
 // listen for requests
-app.listen(5000, () => {
-  console.log("Server is listening on port 5000");
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
 });
