@@ -1,5 +1,5 @@
 {
-  "name": "node-easy-notes-app",
+  "name": "kardly",
   "version": "1.0.0",
   "description": "Never miss a thing in Life. Take notes quickly. Organize and keep track of all your notes.",
   "main": "server.js",
@@ -8,13 +8,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "Express",
-    "RestAPI",
-    "MongoDB",
-    "Mongoose",
+    "Kardly",
     "Notes"
   ],
-  "author": "",
+  "author": "imsaco",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -23,5 +20,9 @@
   },
   "devDependencies": {
     "dotenv": "^8.2.0"
+  },
+  "repository": {
+    "url": "https://github.com/imsaco/kardly-server.git",
+    "type": "git"
   }
 }
