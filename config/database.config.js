@@ -1,5 +1,5 @@
-const { dbUser, dbPassword, dbLink } = require("./environments");
+const { dbProtocol, dbUser, dbPassword, dbLink } = require("./environments");
 
 module.exports = {
-  url: `mongodb://${dbUser}:${dbPassword}@${dbLink}`
+  url: `${dbProtocol}://${dbUser}:${dbPassword}@${dbLink}`
 };
