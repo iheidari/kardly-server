@@ -12,6 +12,7 @@ exports.create = (req, res) => {
   }
 
   const kard = new Kard({
+    star: req.body.star,
     title: req.body.title,
     description: req.body.description,
     tags: req.body.tags || []
@@ -76,6 +77,7 @@ exports.update = (req, res) => {
   Kard.findByIdAndUpdate(
     req.params.id,
     {
+      star: req.body.star,
       title: req.body.title,
       description: req.body.description,
       tags: req.body.tags || []
@@ -120,6 +122,34 @@ exports.delete = (req, res) => {
       }
       return res.status(500).send({
         message: "Could not delete kard with id " + req.params.id
+      });
+    });
+};
+
+exports.setStar = star => (req, res) => {
+  Kard.findByIdAndUpdate(
+    req.params.id,
+    {
+      star
+    },
+    { new: true }
+  )
+    .then(kard => {
+      if (!kard) {
+        return res.status(404).send({
+          message: "Kard not found with id " + req.params.id
+        });
+      }
+      res.send(kard);
+    })
+    .catch(err => {
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
+          message: "Kard not found with id " + req.params.id
+        });
+      }
+      return res.status(500).send({
+        message: "Error updating kard with id " + req.params.id
       });
     });
 };
