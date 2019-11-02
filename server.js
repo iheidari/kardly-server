@@ -35,6 +35,7 @@ mongoose
   });
 
 require("./app/kard/route")(app);
+require("./app/tag/route")(app);
 
 // listen for requests
 app.listen(port, () => {
