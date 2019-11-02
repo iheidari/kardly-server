@@ -12,6 +12,7 @@ exports.create = (req, res) => {
   }
 
   const kard = new Kard({
+    star: req.body.star,
     title: req.body.title,
     description: req.body.description,
     tags: req.body.tags || []
@@ -46,7 +47,7 @@ exports.findOne = (req, res) => {
     .then(kard => {
       if (!kard) {
         return res.status(404).send({
-          message: "Note not found with id " + req.params.id
+          message: `Note not found with id ${req.params.id}`
         });
       }
       res.send(kard);
@@ -54,11 +55,11 @@ exports.findOne = (req, res) => {
     .catch(err => {
       if (err.kind === "ObjectId") {
         return res.status(404).send({
-          message: "Kard not found with id " + req.params.id
+          message: `Kard not found with id ${req.params.id}`
         });
       }
       return res.status(500).send({
-        message: "Error retrieving kard with id " + req.params.id
+        message: `Error retrieving kard with id ${req.params.id}`
       });
     });
 };
@@ -76,6 +77,7 @@ exports.update = (req, res) => {
   Kard.findByIdAndUpdate(
     req.params.id,
     {
+      star: req.body.star,
       title: req.body.title,
       description: req.body.description,
       tags: req.body.tags || []
@@ -85,7 +87,7 @@ exports.update = (req, res) => {
     .then(kard => {
       if (!kard) {
         return res.status(404).send({
-          message: "Kard not found with id " + req.params.id
+          message: `Kard not found with id ${req.params.id}`
         });
       }
       res.send(kard);
@@ -93,11 +95,11 @@ exports.update = (req, res) => {
     .catch(err => {
       if (err.kind === "ObjectId") {
         return res.status(404).send({
-          message: "Kard not found with id " + req.params.id
+          message: `Kard not found with id ${req.params.id}`
         });
       }
       return res.status(500).send({
-        message: "Error updating kard with id " + req.params.id
+        message: `Error updating kard with id ${req.params.id}`
       });
     });
 };
@@ -107,7 +109,7 @@ exports.delete = (req, res) => {
     .then(kard => {
       if (!kard) {
         return res.status(404).send({
-          message: "Kard not found with id " + req.params.id
+          message: `Kard not found with id ${req.params.id}`
         });
       }
       res.send({ message: "Kard deleted successfully!" });
@@ -115,11 +117,39 @@ exports.delete = (req, res) => {
     .catch(err => {
       if (err.kind === "ObjectId" || err.name === "NotFound") {
         return res.status(404).send({
-          message: "Kard not found with id " + req.params.id
+          message: `Kard not found with id ${req.params.id}`
         });
       }
       return res.status(500).send({
-        message: "Could not delete kard with id " + req.params.id
+        message: `Could not delete kard with id ${req.params.id}`
+      });
+    });
+};
+
+exports.setStar = star => (req, res) => {
+  Kard.findByIdAndUpdate(
+    req.params.id,
+    {
+      star
+    },
+    { new: true }
+  )
+    .then(kard => {
+      if (!kard) {
+        return res.status(404).send({
+          message: `Kard not found with id ${req.params.id}`
+        });
+      }
+      res.send(kard);
+    })
+    .catch(err => {
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
+          message: `Kard not found with id ${req.params.id}`
+        });
+      }
+      return res.status(500).send({
+        message: `Error updating kard with id ${req.params.id}`
       });
     });
 };
