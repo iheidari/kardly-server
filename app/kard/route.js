@@ -10,4 +10,7 @@ module.exports = app => {
   app.put("/kard/:id", kard.update);
 
   app.delete("/kard/:id", kard.delete);
+
+  app.post("/kard/add-star/:id", kard.setStar(true));
+  app.post("/kard/remove-star/:id", kard.setStar(false));
 };
