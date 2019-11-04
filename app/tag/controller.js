@@ -1,3 +1,4 @@
+const DEFAULT_LIMIT = 25;
 const Tag = require("./model");
 
 const validate = require("./validate");
@@ -29,16 +30,13 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
   const q = req.query.q;
-  const name = req.query.name;
 
   let searchCriteria = {};
-  if (name) {
-    searchCriteria = { name: new RegExp("^" + name + "$", "i") };
-  } else if (q) {
+  if (q) {
     searchCriteria = { name: new RegExp("^" + q, "i") };
   }
 
-  Tag.find(searchCriteria)
+  Tag.find(searchCriteria, null, { limit: DEFAULT_LIMIT })
     .then(tags => {
       res.send(tags);
     })
@@ -54,7 +52,29 @@ exports.findOne = (req, res) => {
     .then(tag => {
       if (!tag) {
         return res.status(404).send({
-          message: `Note not found with id ${req.params.id}`
+          message: `Tag not found with id ${req.params.id}`
+        });
+      }
+      res.send(tag);
+    })
+    .catch(err => {
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
+          message: `Tag not found with id ${req.params.id}`
+        });
+      }
+      return res.status(500).send({
+        message: `Error retrieving tag with id ${req.params.id}`
+      });
+    });
+};
+
+exports.findByName = (req, res) => {
+  Tag.findOne({ name: req.params.name })
+    .then(tag => {
+      if (!tag) {
+        return res.status(404).send({
+          message: `Tag not found with id ${req.params.id}`
         });
       }
       res.send(tag);
