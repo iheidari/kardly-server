@@ -10,4 +10,6 @@ module.exports = app => {
   app.put("/tag/:id", tag.update);
 
   app.delete("/tag/:id", tag.delete);
+
+  app.get("/tag/findbyname/:name", tag.findByName);
 };
