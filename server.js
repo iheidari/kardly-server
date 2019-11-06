@@ -22,10 +22,14 @@ mongoose.Promise = global.Promise;
 
 // Connecting to the database
 mongoose
-  .connect(dbConfig.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  .connect(
+    dbConfig.url,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    },
+    console.log("dbconfig", dbConfig.url)
+  )
   .then(() => {
     console.log("Successfully connected to the database");
   })
