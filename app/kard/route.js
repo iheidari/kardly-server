@@ -1,4 +1,3 @@
-const { mapRequestToModel } = require("./mapper");
 const db = require("./model");
 const Kard = require("./model");
 
